@@ -151,6 +151,9 @@ if __name__ == '__main__':
         requests = requests.Session()
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
+    print(args.tls_skip_verify)
+
     args.destination_path = ensure_trailing_slash(args.destination_path)
     args.source_path = ensure_trailing_slash(args.source_path)
 
@@ -159,14 +162,12 @@ if __name__ == '__main__':
             token=args.source_token,
             verify=args.tls_skip_verify,
             namespace=args.source_namespace,
-            strict_http=True
         )
     destination_client = hvac.Client(
             url=args.destination_url,
             token=args.destination_token,
             verify=args.tls_skip_verify,
             namespace=args.destination_namespace,
-            strict_http=True
         )
     if args.action == 'copy':
         migrate_secrets(
